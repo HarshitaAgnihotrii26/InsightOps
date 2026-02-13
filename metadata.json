@@ -1,0 +1,7 @@
+{
+  "name": "NukkadBazaar",
+  "description": "A vibrant, Indian-themed street vendor application for managing local businesses.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

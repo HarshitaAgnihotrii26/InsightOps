@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NukkadBazaar</title>
+    <link rel="icon" href="/logo.jpeg" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Rozha+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+        overflow-x: hidden;
+      }
+      .font-display {
+        font-family: 'Rozha One', serif;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #fff7ed;
+      }
+      .dark ::-webkit-scrollbar-track {
+        background: #1f2937;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #C0392B; /* Brick Red */
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #A93226;
+      }
+      
+      /* Stylish Indian Tricolor Background */
+      .bg-market-theme {
+        /* Soft Saffron top-left, Green bottom-right, White center/diagonal */
+        background: 
+          radial-gradient(circle at 10% 10%, rgba(255, 153, 51, 0.25) 0%, transparent 40%),
+          radial-gradient(circle at 90% 90%, rgba(19, 136, 8, 0.25) 0%, transparent 40%),
+          linear-gradient(135deg, #ffffff 30%, #fffcf5 50%, #ffffff 70%);
+        background-color: #ffffff;
+        background-attachment: fixed;
+        transition: background 0.5s ease;
+      }
+
+      /* Dark Mode Background */
+      .dark .bg-market-theme {
+        background: 
+          radial-gradient(circle at 10% 10%, rgba(255, 153, 51, 0.15) 0%, transparent 40%),
+          radial-gradient(circle at 90% 90%, rgba(19, 136, 8, 0.15) 0%, transparent 40%),
+          linear-gradient(135deg, #1a1a1a 30%, #2d2d2d 50%, #1a1a1a 70%);
+        background-color: #111827; /* gray-900 */
+      }
+      
+      /* Overlay to ensure readability if needed, though the gradient above is soft */
+      .bg-market-theme::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+      /* Background image overlay (low opacity) */
+      .bg-market-theme::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/background.jpeg');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.06;
+        pointer-events: none;
+        z-index: 0;
+      }
+      
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 
+          0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+          0 2px 4px -1px rgba(0, 0, 0, 0.06),
+          0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+          0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      }
+      
+      .dark .glass-effect {
+        background: rgba(31, 41, 55, 0.85); /* gray-800 */
+        border: 1px solid rgba(75, 85, 99, 0.4);
+      }
+
+      /* Desi Pattern Border Effect */
+      .desi-border-top {
+        position: relative;
+      }
+      .desi-border-top::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: repeating-linear-gradient(
+          90deg,
+          #FF9933,
+          #FF9933 15px,
+          #ffffff 15px,
+          #ffffff 20px,
+          #138808 20px,
+          #138808 35px,
+          #ffffff 35px,
+          #ffffff 40px
+        );
+      }
+      
+      .dark .desi-border-top::after {
+        background: repeating-linear-gradient(
+          90deg,
+          #FF9933,
+          #FF9933 15px,
+          #1f2937 15px,
+          #1f2937 20px,
+          #138808 20px,
+          #138808 35px,
+          #1f2937 35px,
+          #1f2937 40px
+        );
+      }
+
+      .floating-3d {
+        transform-style: preserve-3d;
+        perspective: 1000px;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        darkMode: 'class', // Enable manual dark mode toggle
+        theme: {
+          extend: {
+            colors: {
+              saffron: {
+                DEFAULT: '#FF9933',
+                50: '#FFF5E6',
+                100: '#FFE6CC',
+                500: '#FF9933',
+                600: '#E67E22', 
+                700: '#D35400',
+              },
+              brick: {
+                DEFAULT: '#C0392B',
+                light: '#E6B0AA',
+                dark: '#922B21',
+                darker: '#7B241C'
+              },
+              wood: {
+                DEFAULT: '#5D4037', // Medium Brown
+                light: '#8D6E63',
+                dark: '#4E342E',
+                darkest: '#281815', // Almost Black Brown for Text High Contrast
+              },
+              sand: {
+                DEFAULT: '#F5CBA7',
+                light: '#FAE5D3',
+                dark: '#E59866'
+              },
+              teal: {
+                 DEFAULT: '#16A085',
+                 dark: '#0E6655',
+                 light: '#A3E4D7'
+              },
+              indiaGreen: {
+                DEFAULT: '#138808',
+                light: '#2ecc71',
+                dark: '#0e6205'
+              }
+            },
+            animation: {
+              'spin-slow': 'spin 12s linear infinite',
+              'bounce-slight': 'bounceSlight 2s infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'gradient-move': 'gradientMove 8s ease infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+              gradientMove: {
+                '0%, 100%': { 'background-position': '0% 50%' },
+                '50%': { 'background-position': '100% 50%' },
+              }
+            },
+            fontFamily: {
+              'sans': ['Poppins', 'sans-serif'],
+              'display': ['Rozha One', 'serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <script type="importmap">
+{
+  "imports": {
+    "react-dom/client": "https://esm.sh/react-dom@^19.2.4/client",
+    "react-dom": "https://esm.sh/react-dom@^19.2.4",
+    "react": "https://esm.sh/react@^19.2.4",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "framer-motion": "https://esm.sh/framer-motion@^12.34.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
+ <link rel="stylesheet" href="index.css">
+ 
+</head>
+  <body>
+    <div id="root"></div>
+ <script type="module" src="index.tsx"></script>
+</body>
+</html>
