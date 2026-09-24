@@ -22,12 +22,12 @@ NukkadBazaar is a digital platform connecting street vendors with secure vending
 
 Local vendors often face challenges such as:
 
-📍 Limited visibility beyond their immediate surroundings
-📱 Lack of digital presence
-💰 Limited access to technology
-🧾 Dependence on traditional buying and selling methods
-📢 Difficulty promoting products to new customers
-🤝 Limited ways to build a digital customer base
+ Limited visibility beyond their immediate surroundings,
+ Lack of digital presence,
+ Limited access to technology,
+ Dependence on traditional buying and selling methods,
+ Difficulty promoting products to new customers,
+ Limited ways to build a digital customer base
 
 At the same time, customers may struggle to:
 
