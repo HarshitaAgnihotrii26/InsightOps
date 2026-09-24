@@ -16,10 +16,33 @@ View your app : https://nukkadbazaar.netlify.app/
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
+2. Run the app:
    `npm run dev`
 =======
 # InsightOps
 NukkadBazaar is a digital platform connecting street vendors with secure vending spaces while providing legal rights awareness and license guidance. It formalizes informal commerce through geo-tagged listings, structured landowner–vendor interaction, and compliance support—promoting economic stability, dignity, and inclusive urban development.
+
+Project Architecture
+                    ┌──────────────────┐
+                    │     Customer     │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                  ┌─────────────────────┐
+                  │    NukkadBazaar     │
+                  │    Web Platform     │
+                  └──────────┬──────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              ▼              ▼              ▼
+        ┌──────────┐   ┌──────────┐   ┌──────────┐
+        │ Vendors  │   │ Products │   │  Local   │
+        │          │   │          │   │ Discovery│
+        └──────────┘   └──────────┘   └──────────┘
+                             │
+                             ▼
+                    ┌────────────────┐
+                    │ Local Economy  │
+                    │   Growth       │
+                    └────────────────┘
 >>>>>>> e2627022f6eac1f8837ba8ddf5d3f6f77d532047
