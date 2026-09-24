@@ -22,27 +22,21 @@ View your app : https://nukkadbazaar.netlify.app/
 # InsightOps
 NukkadBazaar is a digital platform connecting street vendors with secure vending spaces while providing legal rights awareness and license guidance. It formalizes informal commerce through geo-tagged listings, structured landowner–vendor interaction, and compliance support—promoting economic stability, dignity, and inclusive urban development.
 
-Project Architecture
-                    ┌──────────────────┐
-                    │     Customer     │
-                    └────────┬─────────┘
-                             │
-                             ▼
-                  ┌─────────────────────┐
-                  │    NukkadBazaar     │
-                  │    Web Platform     │
-                  └──────────┬──────────┘
-                             │
-              ┌──────────────┼──────────────┐
-              ▼              ▼              ▼
-        ┌──────────┐   ┌──────────┐   ┌──────────┐
-        │ Vendors  │   │ Products │   │  Local   │
-        │          │   │          │   │ Discovery│
-        └──────────┘   └──────────┘   └──────────┘
-                             │
-                             ▼
-                    ┌────────────────┐
-                    │ Local Economy  │
-                    │   Growth       │
-                    └────────────────┘
+Local vendors often face challenges such as:
+
+📍 Limited visibility beyond their immediate surroundings
+📱 Lack of digital presence
+💰 Limited access to technology
+🧾 Dependence on traditional buying and selling methods
+📢 Difficulty promoting products to new customers
+🤝 Limited ways to build a digital customer base
+
+At the same time, customers may struggle to:
+
+Discover nearby local vendors
+Find specific products locally
+Compare available options
+Know which vendors are available around them
+
+NukkadBazaar addresses these challenges through a simple digital platform.
 >>>>>>> e2627022f6eac1f8837ba8ddf5d3f6f77d532047
